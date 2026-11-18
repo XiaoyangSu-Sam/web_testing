@@ -1,0 +1,9 @@
+.venv/
+.env
+.auth/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+offline/
+reports/
+test-results/
