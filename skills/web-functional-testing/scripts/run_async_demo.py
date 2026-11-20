@@ -6,7 +6,10 @@ import csv
 from decimal import Decimal
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import json
+import os
 from pathlib import Path
+import shlex
+import sys
 from tempfile import TemporaryDirectory
 from threading import Thread
 from time import monotonic
@@ -245,6 +248,17 @@ def file_checks():
         return cases, trials
 
 
+def replay_command():
+    workspace = Path.cwd()
+    script = Path(__file__).resolve()
+    if script.is_relative_to(workspace):
+        script = script.relative_to(workspace)
+    arguments = [sys.executable, str(script)]
+    if os.name == "nt":
+        return "& " + " ".join("'" + item.replace("'", "''") + "'" for item in arguments)
+    return shlex.join(arguments)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--out", type=Path, default=Path("reports/exploration/async-demo-" + uuid4().hex[:8]))
@@ -275,19 +289,19 @@ def main():
         "environment": f"Python Playwright using installed Microsoft Edge {edge_version}",
         "scope": "Synthetic async wait, unit and capacity examples. Intentional fixture faults illustrate reporting. Capacity measures local CSV reads only.",
         "cleanup": "The demo service stopped and discarded its in-memory jobs. Temporary CSV files were removed.",
-        "commands": ["uv run --no-sync --offline python .github/skills/web-functional-testing/scripts/run_async_demo.py"],
+        "commands": [replay_command()],
         "next_steps": ["The largest local CSV checked was 10,000 rows. No application capacity limit was established.",
                        "Use the target README, documented completion signals and independent data on the QA application."],
         "requirements": [
-            {"id": "DEMO-REQ-01", "source": "Sample README / Async report", "claim": "The UI publishes the correct result for the accepted job.",
+            {"id": "DEMO-REQ-01", "source": "samples/README.md / DEMO-REQ-01", "claim": "The UI publishes the correct result for the accepted job.",
              "implementation": "run_async_demo.py / fixture and refreshJob"},
-            {"id": "DEMO-REQ-02", "source": "Sample README / Synthetic CSV", "claim": "Generate deterministic rows and exact amount metadata.",
+            {"id": "DEMO-REQ-02", "source": "samples/README.md / DEMO-REQ-02", "claim": "Generate deterministic rows and exact amount metadata.",
              "implementation": "make_csv_fixture.py / make_csv"},
         ],
         "cases": [{"id": "SMOKE-01", "layer": "smoke", "feature": "Report page", "role": "QA user",
                    "scenario": "Report page starts", "status": "passed", "requirement_ids": ["DEMO-REQ-01"],
                    "expected": "The heading and report button are ready.", "observed": "Both UI checks passed.",
-                   "oracle": "Sample README / Async report", "steps": ["Open the synthetic home URL.", "Verify heading and enabled report button."],
+                   "oracle": "samples/README.md / DEMO-REQ-01", "steps": ["Open the synthetic home URL.", "Verify heading and enabled report button."],
                    "test_ref": "run_async_demo.py / main"}, *cases, *csv_cases],
         "capacity": trials,
     }

@@ -27,13 +27,13 @@ Select relevant cases and mark inaccessible branches explicitly. Do not infer ba
 
 ## Author and run
 
-1. Use the installed Edge channel and run `scripts/doctor.py` if the Python kit is present. The inspector supports `--storage-state`, `--ready-selector`, `--identity-selector`, `--expected-identity`, `--headed`, and `--out`. It captures an initial page inventory, ARIA snapshot, screenshot and observed errors. Copilot drives the later interactions.
+1. Start with available browser tools. If the existing Python environment has Playwright and Edge, the [page inspector](../scripts/inspect_page.py) can capture a page inventory, ARIA snapshot, screenshot and observed errors. It supports `--storage-state`, `--ready-selector`, `--identity-selector`, `--expected-identity`, `--headed`, and `--out`. Copilot drives the later interactions.
 2. Prefer `get_by_role`, `get_by_label` or observed stable test IDs, scoped to a particular row, dialog or page section. Use `frame_locator` for known embedded frames and `expect_popup` or `expect_download` before the relevant action. Test visible behavior before reading internal state.
-3. Save reusable cases outside the prior kit's `tests/` folder, which starts synthetic services. Use pytest-playwright's `new_context` fixture when available to inherit artifact capture, or manage screenshots and traces explicitly for direct contexts. Safely avoid unrelated demo setup and retain one context per role.
-4. Execute focused probes while discovering flows and run the discovered suite on a fresh baseline. Example from the combined kit root:
+3. Save cases in the project's test location or in `exploration_tests/` when the project has no suitable suite. Use pytest-playwright's `new_context` fixture when available to inherit artifact capture, or manage screenshots and traces explicitly for direct contexts. Retain one context per role.
+4. Execute focused probes while discovering flows and run the discovered suite on a fresh baseline. If the project's existing runner is pytest, a focused run can look like this:
 
    ```powershell
-   uv run --no-sync --offline python -m pytest exploration_tests -q --html=reports/exploration/qa-001/pytest.html --junitxml=reports/exploration/qa-001/junit.xml --output=reports/exploration/qa-001/pytest-artifacts
+   python -m pytest exploration_tests -q --junitxml=reports/exploration/qa-001/junit.xml
    ```
 
 5. Keep evidence scoped to the owned test record and user-visible failures. Correlate failed network requests with behavior before filing a defect. An expected validation response or login challenge can be part of a passing test.

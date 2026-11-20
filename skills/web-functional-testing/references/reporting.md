@@ -33,12 +33,12 @@ For an async case, list `wait_evidence` in its `artifacts` and reference the sam
 
 For failures, set `cause` to `product`, `test`, `environment` or `unknown`. Use `cause_detail` to state the confirmed cause or explicitly label an evidence-based hypothesis. Use `recommendation` for a concrete fix or diagnostic and `verification` to say what to rerun. Where evidence supports it, identify a source file, function or responsible stage. Prioritize impact and actionable next steps.
 
-For README-based testing, add `requirements`, a list of `id`, `claim`, `source`, and `implementation` objects. Reference those IDs in each case's `requirement_ids` array. Include uncovered requirements, including implementation or access gaps in `implementation`. For measured capacity, add a `capacity` array with `case_id` pointing to a `capacity` case, `input` such as bytes and row count, numeric `seconds`, `criterion`, and `output_check`. Record the highest passing and first failing tested size in the summary or follow-up when known. The distribution's `samples/async-demo/coverage.json` illustrates the structure.
+For README-based testing, add `requirements`, a list of `id`, `claim`, `source`, and `implementation` objects. Reference those IDs in each case's `requirement_ids` array. Include uncovered requirements, including implementation or access gaps in `implementation`. For measured capacity, add a `capacity` array with `case_id` pointing to a `capacity` case, `input` such as bytes and row count, numeric `seconds`, `criterion`, and `output_check`. Record the highest passing and first failing tested size in the summary or follow-up when known. The [synthetic samples](../samples/README.md) include example input and a runnable demo.
 
-Render from the kit root:
+Render from the workspace root with the existing Python:
 
 ```powershell
-uv run --no-sync --offline python .github/skills/web-functional-testing/scripts/render_report.py reports/exploration/qa-001/coverage.json
+python .github/skills/web-functional-testing/scripts/render_report.py reports/exploration/qa-001/coverage.json
 ```
 
 The report computes results from the cases, includes a case matrix and groups issue details, coverage gaps and verified outcomes. It checks artifact links and avoids accepting a success case with contradictory attached async evidence. “Exercised” counts executed cases among discovered cases, including failures and timeouts. It does not measure line, branch or undiscovered website coverage. Keep required facts in the run data so reruns remain comparable.

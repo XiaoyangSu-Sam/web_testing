@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "run_id": "synthetic-plan-example",
+  "target": "Local report and CSV fixture",
+  "environment": "Sample planning input",
+  "scope": "Illustrate how requirements connect to asynchronous browser and fixture tests.",
+  "cleanup": "Delete the generated sample run folder after review.",
+  "commands": [],
+  "next_steps": ["Run the optional local browser demo to produce measured evidence."],
+  "requirements": [
+    {
+      "id": "DEMO-REQ-01",
+      "claim": "A successful job displays three result rows for its own job ID.",
+      "source": "samples/README.md / Sample requirements",
+      "implementation": "scripts/run_async_demo.py / run_case"
+    },
+    {
+      "id": "DEMO-REQ-02",
+      "claim": "The fixture contains sequential IDs and matching row and amount totals.",
+      "source": "samples/README.md / Sample requirements",
+      "implementation": "scripts/make_csv_fixture.py / make_csv"
+    }
+  ],
+  "cases": [
+    {
+      "id": "JOB-01",
+      "requirement_ids": ["DEMO-REQ-01"],
+      "feature": "Asynchronous report",
+      "role": "Synthetic fixture user",
+      "scenario": "Submit one job and verify its final output.",
+      "layer": "gui",
+      "status": "not_run",
+      "expected": "The submitted job reaches completion and its three rows appear in the UI.",
+      "observed": "This sample records the planned case.",
+      "next_step": "Run the localhost demo and inspect the job-correlated result."
+    },
+    {
+      "id": "CSV-01",
+      "requirement_ids": ["DEMO-REQ-02"],
+      "feature": "Synthetic CSV",
+      "role": "Local test runner",
+      "scenario": "Generate and independently read a four-row fixture.",
+      "layer": "unit",
+      "status": "not_run",
+      "expected": "The IDs are 1 through 4 and the exact amount total is 1.25.",
+      "observed": "This sample records the planned case.",
+      "next_step": "Generate the fixture and compare its contents and metadata."
+    }
+  ]
+}

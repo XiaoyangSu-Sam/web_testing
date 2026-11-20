@@ -8,10 +8,10 @@ Start with ordinary business use. Test the small baseline and exact results firs
 4. **Validate each step.** Assert exact record counts, representative values, completeness/order, totals, no duplicate records and persistence as applicable. A successful HTTP status with missing rows fails the functional check. A correct rejection above a documented limit passes an input-limit behavior check. Capture actual rejection, timeout, crash, corrupted result or unavailable instrumentation distinctly.
 5. **Stop escalation on the first failure or limit.** Save the highest tested size satisfying the stated criteria and the first tested size that did not. Use the observed interval to guide a narrower rerun if appropriate. A capacity ceiling is established only within the tested bounds, environment and acceptance criteria. Save cleanup state and avoid reissuing timed-out writes.
 
-For the included `id,amount,note` fixture format, generate bounded synthetic files with:
+Generate a bounded `id,amount,note` fixture from the workspace root using the bundled CSV generator and existing Python:
 
 ```powershell
-uv run --no-sync --offline python .github/skills/web-functional-testing/scripts/make_csv_fixture.py reports/exploration/qa-001/fixtures/sample.csv --rows 10000 --note-bytes 100
+python .github/skills/web-functional-testing/scripts/make_csv_fixture.py reports/exploration/qa-001/fixtures/sample.csv --rows 10000 --note-bytes 100
 ```
 
 The generator prints actual bytes, expected count and exact sum. Adapt the columns to the real test contract before uploading. The generator writes a local file and does not submit it to the application. Execute the approved browser or integration check at each size using the existing application adapter. Put the measurements in the report's `capacity` table and link logs or JSON with raw samples.
