@@ -1,6 +1,6 @@
 # Skills for Daily Work
 
-A copy-ready catalog for documents, research, planning, browser work, and everyday development. It includes 20 selections from OpenAI's public Codex Skills catalog and this repository's Web Functional Testing Skill.
+A copy-ready catalog for documents, research, planning, browser work, and everyday development. It includes 20 selections from OpenAI's public Codex Skills catalog and this repository's Web Functional Testing and Prepare Desk Booking Automation Skills.
 
 ## Install in a project
 
@@ -9,6 +9,10 @@ Copy the complete directories you want from `skills/` into `.github/skills/` for
 ## Web Functional Testing
 
 [Web Functional Testing](skills/web-functional-testing/) designs, writes, and runs independent unit, integration, and browser checks from product requirements, the live UI, and fresh fixtures. See the [independent test design guide](skills/web-functional-testing/references/independent-test-design.md) for general Web scenarios and the [samples guide](skills/web-functional-testing/samples/README.md) for a file-only walkthrough and optional localhost browser demo. Python 3.10 or newer runs the local report and data helpers. Browser checks can use available browser tools or Python Playwright with Edge.
+
+## Prepare Desk Booking Automation
+
+[Prepare Desk Booking Automation](skills/prepare-desk-booking-automation/) maintains an existing Desk Booking Skill. It maps the booking site through read-only discovery, updates the booking workflow, and verifies it with independent acceptance tests against synthetic data. It runs in the target booking workspace and can use Web Functional Testing alongside it.
 
 ## Document, data and media
 
