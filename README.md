@@ -4,7 +4,7 @@ Each directory in [`skills/`](skills/) is a complete Skill. Copy the whole direc
 
 | Skill | What it does |
 | --- | --- |
-| [Web Functional Testing](skills/web-functional-testing/) | Turns a web application's README, source and test URL into unit, integration and browser checks with a coverage report. |
+| [Web Functional Testing](skills/web-functional-testing/) | Authors and runs independent unit, integration and browser checks using product requirements, observed workflows and its own fixtures. |
 
 ## Install in a project
 

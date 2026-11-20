@@ -1,6 +1,6 @@
 # Results and evidence
 
-Use a new `reports/exploration/<run-id>/` per pass. Keep the report beside its machine-readable input and evidence so the links survive copying. Save only evidence suitable for the team's test-data rules. Link the original pytest HTML/JUnit when available. Keep `coverage.json` up to date as cases are discovered and executed.
+Use a new `reports/exploration/<run-id>/` per pass. Keep the report beside its machine-readable input and evidence so the links survive copying. Save only evidence suitable for the team's test-data rules. Link the runner output for this run's independent tests and keep `coverage.json` up to date as cases are planned and executed.
 
 ```text
 reports/exploration/qa-001/
@@ -18,7 +18,7 @@ reports/exploration/qa-001/
 
 Top level requires `schema_version` set to `1`, textual `run_id`, `target`, `environment`, `scope`, `cleanup`, and arrays `commands`, `next_steps`, `cases`. Record role and known test data in each relevant case. Use explicit commands for replay. If the run couldn't discover any cases, include the blocker or follow-up in `next_steps`.
 
-Each case requires `id`, `feature`, `role`, `scenario`, `layer`, `status`, `expected`, `observed`. Layers are `smoke`, `unit`, `integration`, `gui`, `capacity`. Give every distinct scenario a unique ID. Provide real `steps` for executed cases, including reproducible input. Use `test_ref` for the source file or pytest node ID. Use `oracle` for the source of the expectation, required on passed cases. Use `artifacts` as existing, forward-slash relative paths inside the run folder. Include screenshots, traces, timelines or relevant assertion evidence for failures/timeouts.
+Each case requires `id`, `feature`, `role`, `scenario`, `layer`, `status`, `expected`, `observed`. Layers are `smoke`, `unit`, `integration`, `gui`, `capacity`. Give every distinct scenario a unique ID. For executed cases, provide reproducible `steps` and set `test_ref` to the new test file or the recorded browser case for this run. Set `oracle` to the independently derived basis for each asserted expected result. Use `artifacts` as existing, forward-slash relative paths inside the run folder. Include screenshots, traces, timelines or relevant assertion evidence for failures/timeouts. Execution totals cover fresh cases that actually ran. Project test counts, discovery-only observations and unwritten tests do not establish a pass.
 
 | `status` | Meaning | Additional fields |
 |---|---|---|
